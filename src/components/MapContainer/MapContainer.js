@@ -2,6 +2,7 @@ import React from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+import FetchPolygonData from "../../utils/FetchPolygonData";
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -10,7 +11,10 @@ const Map = ReactMapboxGl({
 
 export const MapContainer = () => {
   const onDrawCreate = ({ features }) => {
-    console.log(features);
+    const polygon = features[0].geometry.coordinates[0].map((coords) => {
+      return { lat: coords[1], lng: coords[0] };
+    });
+    FetchPolygonData(polygon);
   };
 
   const onDrawUpdate = ({ features }) => {
@@ -37,9 +41,7 @@ export const MapContainer = () => {
             combine_features: false,
             uncombine_features: false,
           }}
-          onDrawModeChange={(e) => {
-            debugger;
-          }}
+          onDrawModeChange={(e) => {}}
         />
       </Map>
     </div>
