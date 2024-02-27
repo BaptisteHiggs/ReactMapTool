@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import ReactMapboxGl from "react-mapbox-gl";
-import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import { MapContainer } from "./components/MapContainer/MapContainer";
-
 import "./style.css";
+import { TokenInput } from "./components/AccessTokenCheck/AccessTokenCheck";
+import { GetURLVariable } from "./utils/urlVariableUtils";
+import { ACCESS_TOKEN } from "./constants";
+import validateToken from "./utils/ValidateToken";
 
 function App() {
-  const onDrawCreate = ({ features }) => {
-    console.log(features);
-  };
+  const [tokenValid, setTokenValid] = useState(false);
+  const accessToken = GetURLVariable(ACCESS_TOKEN);
 
-  const onDrawUpdate = ({ features }) => {
-    console.log(features);
-  };
+  useEffect(() => {
+    const getValidity = async () => {
+      const tokenValidResult = await validateToken(accessToken);
+      setTokenValid(tokenValidResult);
+    };
 
-  return <MapContainer />;
+    getValidity();
+  }, [accessToken]);
+
+  return tokenValid ? <MapContainer /> : <TokenInput />;
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));

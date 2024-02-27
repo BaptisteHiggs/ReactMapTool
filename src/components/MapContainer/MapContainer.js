@@ -3,10 +3,11 @@ import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import FetchPolygonData from "../../utils/FetchPolygonData";
+import { ACCESS_TOKEN } from "../../constants";
+import { GetURLVariable } from "../../utils/urlVariableUtils";
 
 const Map = ReactMapboxGl({
-  accessToken:
-    "pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g",
+  accessToken: GetURLVariable(ACCESS_TOKEN),
 });
 
 export const MapContainer = () => {
@@ -15,6 +16,7 @@ export const MapContainer = () => {
       return { lat: coords[1], lng: coords[0] };
     });
     FetchPolygonData(polygon);
+    console.log(window.location.search);
   };
 
   const onDrawUpdate = ({ features }) => {
