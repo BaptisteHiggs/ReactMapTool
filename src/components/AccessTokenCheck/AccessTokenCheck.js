@@ -3,7 +3,7 @@ import "./style.css";
 import { SetURLVariable } from "../../utils/urlVariableUtils";
 import { ACCESS_TOKEN } from "../../constants";
 import validateToken from "../../utils/ValidateToken";
-import DataTable from "../DataTable/Table";
+import DataTable from "../DataTable/DataTable";
 
 export const TokenInput = () => {
   const [value, setValue] = useState("");

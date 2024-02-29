@@ -7,7 +7,7 @@ import { ACCESS_TOKEN } from "../../constants";
 import { GetURLVariable } from "../../utils/urlVariableUtils";
 import Draggable from "react-draggable";
 import "./style.css";
-import DataTable from "../DataTable/Table";
+import DataTable from "../DataTable/DataTable";
 
 const Map = ReactMapboxGl({
   accessToken: GetURLVariable(ACCESS_TOKEN),
