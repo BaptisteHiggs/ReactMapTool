@@ -14,16 +14,17 @@ const Map = ReactMapboxGl({
 });
 
 export const MapContainer = () => {
-  const [renderTable, setRenderTable] = useState(true);
   const [promisedData, setPromisedData] = useState(null);
   const [dataLoading, setDataLoading] = useState(false);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     if (!!promisedData) {
       const getData = async () => {
         const data = await promisedData;
+        setPromisedData(null);
         setDataLoading(false);
-        console.log("polygon:", data);
+        setData(data);
       };
 
       getData();
@@ -45,10 +46,14 @@ export const MapContainer = () => {
 
   return (
     <div>
-      {(renderTable || dataLoading) && (
+      {(!!data || dataLoading) && (
         <Draggable className="draggable">
           <div className="box">
-            {dataLoading ? <div>Loading data...</div> : <DataTable />}
+            {dataLoading ? (
+              <div>Loading data...</div>
+            ) : (
+              <DataTable data={data} />
+            )}
           </div>
         </Draggable>
       )}

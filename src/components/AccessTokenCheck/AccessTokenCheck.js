@@ -3,6 +3,7 @@ import "./style.css";
 import { SetURLVariable } from "../../utils/urlVariableUtils";
 import { ACCESS_TOKEN } from "../../constants";
 import validateToken from "../../utils/ValidateToken";
+import DataTable from "../DataTable/Table";
 
 export const TokenInput = () => {
   const [value, setValue] = useState("");
@@ -37,6 +38,7 @@ export const TokenInput = () => {
           onChange={handleChange}
         />
       </form>
+      <DataTable />
     </div>
   );
 };
