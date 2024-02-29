@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
@@ -7,30 +7,51 @@ import { ACCESS_TOKEN } from "../../constants";
 import { GetURLVariable } from "../../utils/urlVariableUtils";
 import Draggable from "react-draggable";
 import "./style.css";
+import DataTable from "../DataTable/Table";
 
 const Map = ReactMapboxGl({
   accessToken: GetURLVariable(ACCESS_TOKEN),
 });
 
 export const MapContainer = () => {
+  const [renderTable, setRenderTable] = useState(true);
+  const [promisedData, setPromisedData] = useState(null);
+  const [dataLoading, setDataLoading] = useState(false);
+
+  useEffect(() => {
+    if (!!promisedData) {
+      const getData = async () => {
+        const data = await promisedData;
+        setDataLoading(false);
+        console.log("polygon:", data);
+      };
+
+      getData();
+    }
+  }, [promisedData]);
+
   const onDrawCreate = ({ features }) => {
     const polygon = features[0].geometry.coordinates[0].map((coords) => {
       return { lat: coords[1], lng: coords[0] };
     });
-    FetchPolygonData(polygon);
+    setPromisedData(FetchPolygonData(polygon));
+    setDataLoading(true);
+    console.log("onDrawCreate");
   };
 
   const onDrawUpdate = ({ features }) => {
-    console.log(features);
+    console.log("onDrawUpdate");
   };
 
   return (
     <div>
-      <Draggable className="draggable">
-        <div className="box">
-          <div>Move me around!</div>
-        </div>
-      </Draggable>
+      {(renderTable || dataLoading) && (
+        <Draggable className="draggable">
+          <div className="box">
+            {dataLoading ? <div>Loading data...</div> : <DataTable />}
+          </div>
+        </Draggable>
+      )}
       <Map
         style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line
         containerStyle={{

@@ -1,0 +1,21 @@
+.tokenInputDiv {
+  margin: auto;
+  width: 100%;
+  position: absolute;
+  top: 40%;
+  text-align: center;
+
+  .form {
+    margin: auto;
+    width: 14em;
+
+    .label {
+      margin: auto;
+      color: teal;
+    }
+
+    .input {
+      margin: auto;
+    }
+  }
+}

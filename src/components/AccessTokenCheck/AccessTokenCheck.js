@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import classes from "./TokenInput.module.scss";
+import "./style.css";
 import { SetURLVariable } from "../../utils/urlVariableUtils";
 import { ACCESS_TOKEN } from "../../constants";
 import validateToken from "../../utils/ValidateToken";
@@ -23,14 +23,14 @@ export const TokenInput = () => {
   };
 
   return (
-    <div /*className={classes["tokenInputDiv"]}*/>
-      <form /*className={classes["form"]}*/>
-        <label /*className={classes["label"]}*/ htmlFor="text-input">
+    <div className="tokenInputDiv">
+      <form className="form">
+        <label className="label" htmlFor="text-input">
           Enter Mapbox Access Token:
         </label>
         <br /> <br />
         <input
-          //   className={classes["input"]}
+          className="input"
           type="text"
           id="text-input"
           value={value}
