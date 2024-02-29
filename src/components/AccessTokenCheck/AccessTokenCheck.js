@@ -38,7 +38,6 @@ export const TokenInput = () => {
           onChange={handleChange}
         />
       </form>
-      <DataTable />
     </div>
   );
 };

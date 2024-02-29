@@ -37,11 +37,11 @@ export const MapContainer = () => {
     });
     setPromisedData(FetchPolygonData(polygon));
     setDataLoading(true);
-    console.log("onDrawCreate");
+    //console.log("onDrawCreate");
   };
 
   const onDrawUpdate = ({ features }) => {
-    console.log("onDrawUpdate");
+    //console.log("onDrawUpdate");
   };
 
   return (
@@ -50,7 +50,7 @@ export const MapContainer = () => {
         <Draggable className="draggable">
           <div className="box">
             {dataLoading ? (
-              <div>Loading data...</div>
+              <div style={{ padding: "5px" }}>Loading data...</div>
             ) : (
               <DataTable data={data} />
             )}
