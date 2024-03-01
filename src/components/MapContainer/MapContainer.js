@@ -36,17 +36,12 @@ export const MapContainer = () => {
     }
   }, [promisedData]);
 
-  const onDrawCreate = ({ features }) => {
+  const onChangedPolygon = ({ features }) => {
     const polygon = features[0].geometry.coordinates[0].map((coords) => {
       return { lat: coords[1], lng: coords[0] };
     });
     setPromisedData(FetchPolygonData(polygon));
     setDataLoading(true);
-    //console.log("onDrawCreate");
-  };
-
-  const onDrawUpdate = ({ features }) => {
-    //console.log("onDrawUpdate");
   };
 
   const onDrawModeChange = ({ mode }) => {
@@ -81,13 +76,15 @@ export const MapContainer = () => {
           height: "100vh",
           width: "100vw",
         }}
+        center={[151.495830802, -24.2436222147]}
+        zoom={[15]}
       >
         <DrawControl
           ref={(drawControl) => {
             drawRef.current = drawControl;
           }}
-          onDrawCreate={onDrawCreate}
-          onDrawUpdate={onDrawUpdate}
+          onDrawCreate={onChangedPolygon}
+          onDrawUpdate={onChangedPolygon}
           controls={{
             point: false,
             line_string: false,
