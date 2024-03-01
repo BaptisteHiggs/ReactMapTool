@@ -17,6 +17,7 @@ export const MapContainer = () => {
   const [promisedData, setPromisedData] = useState(null);
   const [dataLoading, setDataLoading] = useState(false);
   const [data, setData] = useState(null);
+  const [renderTable, setRenderTable] = useState(true);
 
   useEffect(() => {
     if (!!promisedData) {
@@ -52,7 +53,14 @@ export const MapContainer = () => {
             {dataLoading ? (
               <div style={{ padding: "5px" }}>Loading data...</div>
             ) : (
-              <DataTable data={data} />
+              renderTable && (
+                <DataTable
+                  data={data}
+                  closeTable={() => {
+                    setRenderTable(false);
+                  }}
+                />
+              )
             )}
           </div>
         </Draggable>
