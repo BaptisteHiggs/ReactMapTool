@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
@@ -8,6 +8,7 @@ import { GetURLVariable } from "../../utils/urlVariableUtils";
 import Draggable from "react-draggable";
 import "./style.css";
 import DataTable from "../DataTable/DataTable";
+import { RemoveExisting } from "./utils";
 
 const Map = ReactMapboxGl({
   accessToken: GetURLVariable(ACCESS_TOKEN),
@@ -18,6 +19,8 @@ export const MapContainer = () => {
   const [dataLoading, setDataLoading] = useState(false);
   const [data, setData] = useState(null);
   const [renderTable, setRenderTable] = useState(true);
+
+  const drawRef = useRef(null);
 
   useEffect(() => {
     if (!!promisedData) {
@@ -44,6 +47,12 @@ export const MapContainer = () => {
 
   const onDrawUpdate = ({ features }) => {
     //console.log("onDrawUpdate");
+  };
+
+  const onDrawModeChange = ({ mode }) => {
+    if (mode === "draw_polygon") {
+      RemoveExisting(drawRef);
+    }
   };
 
   return (
@@ -74,6 +83,9 @@ export const MapContainer = () => {
         }}
       >
         <DrawControl
+          ref={(drawControl) => {
+            drawRef.current = drawControl;
+          }}
           onDrawCreate={onDrawCreate}
           onDrawUpdate={onDrawUpdate}
           controls={{
@@ -84,7 +96,7 @@ export const MapContainer = () => {
             combine_features: false,
             uncombine_features: false,
           }}
-          onDrawModeChange={(e) => {}}
+          onDrawModeChange={onDrawModeChange}
         />
       </Map>
     </div>

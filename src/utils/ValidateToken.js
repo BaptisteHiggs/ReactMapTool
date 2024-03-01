@@ -1,5 +1,7 @@
 async function validateToken(token) {
-  const response = await sendApiRequest(constructURL("example", token));
+  let response = null;
+  response = await sendApiRequest(constructURL("example", token));
+
   return response.number !== 401;
 }
 
