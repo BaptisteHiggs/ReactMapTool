@@ -25,6 +25,7 @@ export const MapContainer = () => {
         const data = await promisedData;
         setPromisedData(null);
         setDataLoading(false);
+        setRenderTable(true);
         setData(data);
       };
 
