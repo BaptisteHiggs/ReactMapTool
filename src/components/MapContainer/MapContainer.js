@@ -10,6 +10,8 @@ import "./style.css";
 import DataTable from "../DataTable/DataTable";
 import { RemoveExisting } from "./utils";
 
+const osmtogeojson = require("osmtogeojson");
+
 const Map = ReactMapboxGl({
   accessToken: GetURLVariable(ACCESS_TOKEN),
 });
@@ -35,6 +37,13 @@ export const MapContainer = () => {
       getData();
     }
   }, [promisedData]);
+
+  useEffect(() => {
+    if (!!data) {
+      const geoJson = osmtogeojson(data);
+      debugger;
+    }
+  }, [data]);
 
   const onChangedPolygon = ({ features }) => {
     const polygon = features[0].geometry.coordinates[0].map((coords) => {
