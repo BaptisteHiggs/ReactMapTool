@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ReactMapTool/precache-manifest.823818a94b48b02c9f99b79ce279b5c2.js"
+  "/ReactMapTool/precache-manifest.b52c6a52b1de4b37322fa4fb3619d294.js"
 );
 
 self.addEventListener('message', (event) => {
