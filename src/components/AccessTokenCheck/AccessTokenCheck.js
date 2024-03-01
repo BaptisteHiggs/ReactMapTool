@@ -29,7 +29,7 @@ export const TokenInput = () => {
         <label className="label" htmlFor="text-input">
           Enter Mapbox Access Token:
         </label>
-        <br /> <br />
+        <br />
         <input
           className="input"
           type="text"
