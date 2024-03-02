@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import ReactMapboxGl from "react-mapbox-gl";
+import ReactMapboxGl, { GeoJSONLayer } from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
+
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import FetchPolygonData from "../../utils/FetchPolygonData";
 import { ACCESS_TOKEN } from "../../constants";
@@ -9,6 +10,7 @@ import Draggable from "react-draggable";
 import "./style.css";
 import DataTable from "../DataTable/DataTable";
 import { RemoveExisting } from "./utils";
+import GeoJsonDisplay from "../GeoJsonDisplay/GeoJsonDisplay";
 
 const osmtogeojson = require("osmtogeojson");
 
@@ -21,6 +23,7 @@ export const MapContainer = () => {
   const [dataLoading, setDataLoading] = useState(false);
   const [data, setData] = useState(null);
   const [renderTable, setRenderTable] = useState(true);
+  const [geoJson, setGeoJson] = useState(null);
 
   const drawRef = useRef(null);
 
@@ -40,8 +43,7 @@ export const MapContainer = () => {
 
   useEffect(() => {
     if (!!data) {
-      const geoJson = osmtogeojson(data);
-      debugger;
+      setGeoJson(osmtogeojson(data).data);
     }
   }, [data]);
 
@@ -104,6 +106,7 @@ export const MapContainer = () => {
           }}
           onDrawModeChange={onDrawModeChange}
         />
+        {!!geoJson && <GeoJsonDisplay data={geoJson} />}
       </Map>
     </div>
   );
